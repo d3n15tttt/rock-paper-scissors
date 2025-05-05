@@ -14,18 +14,28 @@ function getHumanChoice() {
     return prompt(`ROCK, PAPER OR SCISSORS?`);
 }
 
-let humanScore;
-let computerScore;
+
+let humanScore = 0;
+let computerScore = 0;
+
+const humanScoreSpan   = document.getElementById("human-score");
+const computerScoreSpan= document.getElementById("computer-score");
+const messageDiv       = document.getElementById("message");
+
+function updateScores() {
+    humanScoreSpan.textContent    = humanScore;
+    computerScoreSpan.textContent = computerScore;
+  }
 
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
     if (humanChoice === computerChoice) {
-        console.log(`it's a tie, you both picked ${humanChoice}`);
+        text = `TIE, you both picked ${humanChoice}.`;
         return;
     }
 
-    let winConditions = {
+    const winConditions = {
         rock:       "scissors",
         paper:      "rock",
         scissors:   "paper"
@@ -33,14 +43,16 @@ function playRound(humanChoice, computerChoice) {
 
     if (winConditions[humanChoice] === computerChoice) {
         humanScore++;
-        console.log(`You won, you picked ${humanChoice}, while COM picked ${computerChoice}.`);
+        text = `You won, you picked ${humanChoice}, while COM picked ${computerChoice}.`;
     } else {
         computerScore++;
-        console.log(`You faken lost mate, you had ${humanChoice}, while the COM had ${computerChoice}.`);
+        text = `You faken lost mate, you had ${humanChoice}, while the COM had ${computerChoice}.`;
     }
+    updateScores();
+    messageDiv.textContent = text;
 }
 
-function playGame() {
+/*function playGame() {
     humanScore = 0;
     computerScore = 0;
 
@@ -61,4 +73,17 @@ function playGame() {
     }
 }
 
-playGame();
+playGame();*/
+
+document.getElementById("rock")
+        .addEventListener("click", () => {
+          playRound("rock", getComputerChoice());
+        });
+document.getElementById("paper")
+        .addEventListener("click", () => {
+          playRound("paper", getComputerChoice());
+        });
+document.getElementById("scissors")
+        .addEventListener("click", () => {
+          playRound("scissors", getComputerChoice());
+        });
